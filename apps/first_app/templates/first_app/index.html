@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'first_app/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+  </head>
+  <body>
+    <h1>Login registration</h1>
+    <div class="wrapper">
+      <h3>Register</h3>
+      <form class="register_form" action="/register" method="get">
+        {% csrf_token %}
+        <label for="First Name">First Name: </label>
+        <input type="text" name="first_name" value="">
+        <br>
+        <label for="Last Name">Last Name: </label>
+        <input type="text" name="last_name" value="">
+        <br>
+        <label for="email">Email: </label>
+        <input type="text" name="email" value="">
+        <br>
+        <label for="Password">Password: </label>
+        <input type="text" name="password" value="">
+        <br>
+        <label for="Confirm Password">Confirm Password: </label>
+        <input type="text" name="confirm_password" value="">
+        <button id="register" type="submit" name="submit" value='REGISTER'>REGISTER</button>
+      </form>
+      <br>
+      <h3>Already Registered? Login here.</h3>
+
+      <form class="login_form" action="/login" method="get">
+        {% csrf_token %}
+        <p>User E-Mail: <input type="text" name="login_email" value=""></p>
+        <p>User Password: <input type="text" name="login_password" value=""></p>
+        <button id="login" type="submit" name="log_in">LOG IN</button>
+      </form>
+      <div class="flash-message">
+
+      </div>
+
+    </div>
+
+  </body>
+</html>
