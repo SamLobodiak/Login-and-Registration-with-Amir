@@ -14,6 +14,7 @@ def index(request):
 
 def register(request):
     print("***********going through REGISTER**********")
+
     if len(request.POST['first_name']) < 2:
         return redirect('/')
     elif len(request.POST['last_name']) < 2:
@@ -33,16 +34,25 @@ def register(request):
 def login(request):
     print("******going through LOGIN***********")
 
-    # database_email = users.objects.get(email=request.POST['email'])
-    # print(users.objects.get(id=1))
-    # database_password = users.objects.get(password=request.POST['password'])
-    # print(users.objects.get(request.POST['email']))
-    # print (request.POST["email"])
-    # users.objects.filter(email=request.POST['email']).filter(password)
-    if users.objects.filter(email__contains=request.POST['email']):
-        print (request.POST["email"])
-        email_id=users.objects.filter(email=request.POST["email"]).get(id)
-        if request.POST['password'] == users.objects.filter(id=email_id).get(password):
+    # print(users.objects.filter(email__contains=request.POST['email']))
+    print (request.POST["login_email"])
+    print (request.POST["login_password"])
+
+
+    if users.objects.filter(email=request.POST['login_email']):
+        print(users.objects.filter(email=request.POST["login_email"]))
+        # this works
+        print(hashlib.md5(request.POST['login_password'].encode('utf-8')).hexdigest())
+
+        email_id = users.objects.filter(email=request.POST["login_email"])[0]
+        password_id = users.objects.filter(password=hashlib.md5(request.POST['login_password'].encode('utf-8')).hexdigest())[0]
+
+        print(email_id.password)
+        print(email_id.id)
+
+        print(password_id.id)
+
+        if password_id.id == email_id.id:
             return redirect('/success')
         else:
             return redirect('/')
